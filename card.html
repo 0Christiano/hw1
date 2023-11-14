@@ -2,108 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Four JavaScript Libraries Example</title>
-  <!-- Include libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <title>Animated Chart Library</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- Some basic styling for the example -->
-  <style>
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 50px;
-    }
-    canvas {
-      max-width: 400px;
-      border: 1px solid #ccc;
-    }
-  </style>
 </head>
 <body>
-
-  <div class="container">
-    <!-- jQuery Example -->
-    <div id="jqueryExample">
-      <h3>jQuery Example</h3>
-      <button id="jqueryButton">Click me</button>
-      <p id="jqueryOutput"></p>
-    </div>
-
-    <!-- Lodash Example -->
-    <div id="lodashExample">
-      <h3>Lodash Example</h3>
-      <ul id="lodashOutput"></ul>
-    </div>
-
-    <!-- Moment.js Example -->
-    <div id="momentExample">
-      <h3>Moment.js Example</h3>
-      <p id="momentOutput"></p>
-    </div>
-
-    <!-- Chart.js Example -->
-    <div id="chartExample">
-      <h3>Chart.js Example</h3>
-      <canvas id="myChart" width="400" height="200"></canvas>
-    </div>
-  </div>
+  <canvas id="myChart" width="600" height="400"></canvas>
 
   <script>
-    // jQuery Example
-    $('#jqueryButton').click(function() {
-      $('#jqueryOutput').text('Hello, jQuery!');
-    });
+    const AnimatedChart = {
+      chart: null,
 
-    // Lodash Example
-    const data = [1, 2, 3, 4, 5];
-    const modifiedData = _.map(data, (num) => `<li>${num * 2}</li>`);
-    document.getElementById('lodashOutput').innerHTML = modifiedData.join('');
-
-    // Moment.js Example
-    const date = moment().format('MMMM Do YYYY, h:mm:ss a');
-    document.getElementById('momentOutput').innerText = date;
-
-    // Chart.js Example
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+      init: function(canvasId) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        this.chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Animated Chart',
+              data: [],
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          },
+          options: {
+            animation: {
+              duration: 1000, // Animation duration in milliseconds
+            },
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'X Axis'
+                }
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Y Axis'
+                }
+              }
+            }
           }
-        }
+        });
+
+        this.startAnimation();
+      },
+
+      startAnimation: function() {
+        let counter = 0;
+        const interval = setInterval(() => {
+          this.addData(counter++);
+          this.updateChart();
+          if (counter === 10) {
+            clearInterval(interval);
+          }
+        }, 1000); // Update data every 1 second
+      },
+
+      addData: function(value) {
+        this.chart.data.labels.push(`Point ${value}`);
+        this.chart.data.datasets[0].data.push(Math.floor(Math.random() * 100));
+      },
+
+      updateChart: function() {
+        this.chart.update();
       }
-    });
+    };
+
+    // Initialize the AnimatedChart library on window load
+    window.onload = function() {
+      AnimatedChart.init('myChart');
+    };
   </script>
 </body>
 </html>
