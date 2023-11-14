@@ -29,7 +29,7 @@
           },
           options: {
             animation: {
-              duration: 1000, // Animation duration in milliseconds
+              duration: 500, 
             },
             scales: {
               x: {
@@ -61,7 +61,7 @@
           if (counter === 10) {
             clearInterval(interval);
           }
-        }, 1000); // Update data every 1 second
+        }, 500); 
       },
 
       addData: function(value) {
@@ -74,7 +74,7 @@
       }
     };
 
-    // Initialize the AnimatedChart library on window load
+
     window.onload = function() {
       AnimatedChart.init('myChart');
     };
