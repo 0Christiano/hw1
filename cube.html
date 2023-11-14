@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>3D Animation Library</title>
+  <title>3D Animation Library - Purple Cube with Lines</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
@@ -16,39 +16,51 @@
       cube: null,
 
       init: function(containerId) {
-       
+        // Create scene
         this.scene = new THREE.Scene();
 
-      
+        // Create camera
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 5;
 
-       
+        // Create renderer
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById(containerId).appendChild(this.renderer.domElement);
 
-    
-       const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x800080 }); // Purple color represented as hexadecimal value
-this.cube = new THREE.Mesh(geometry, material);
-this.scene.add(this.cube);
+        // Create cube with purple color and wireframe
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0x800080 }); // Purple color
+        const cubeMesh = new THREE.Mesh(geometry, material);
 
-      
+        // Create wireframe
+        const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black color wireframe
+        const wireframe = new THREE.WireframeGeometry(geometry);
+        const wireframeLines = new THREE.LineSegments(wireframe, wireframeMaterial);
+
+        // Group both cube and wireframe together
+        const cubeGroup = new THREE.Group();
+        cubeGroup.add(cubeMesh);
+        cubeGroup.add(wireframeLines);
+        this.cube = cubeGroup;
+        this.scene.add(this.cube);
+
+        // Start animation with faster rotation
         this.animate();
       },
 
       animate: function() {
         requestAnimationFrame(this.animate.bind(this));
 
-        this.cube.rotation.x += 0.01;
-        this.cube.rotation.y += 0.01;
+        // Faster rotation
+        this.cube.rotation.x += 0.03;
+        this.cube.rotation.y += 0.03;
 
         this.renderer.render(this.scene, this.camera);
       }
     };
 
-  
+    // Initialize the ThreeDAnimation library on window load
     window.onload = function() {
       ThreeDAnimation.init('animationContainer');
     };
