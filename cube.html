@@ -16,25 +16,25 @@
       cube: null,
 
       init: function(containerId) {
-        // Create scene
+       
         this.scene = new THREE.Scene();
 
-        // Create camera
+      
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 5;
 
-        // Create renderer
+       
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById(containerId).appendChild(this.renderer.domElement);
 
-        // Create cube
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        this.cube = new THREE.Mesh(geometry, material);
-        this.scene.add(this.cube);
+    
+       const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0x800080 }); // Purple color represented as hexadecimal value
+this.cube = new THREE.Mesh(geometry, material);
+this.scene.add(this.cube);
 
-        // Start animation
+      
         this.animate();
       },
 
@@ -48,7 +48,7 @@
       }
     };
 
-    // Initialize the ThreeDAnimation library on window load
+  
     window.onload = function() {
       ThreeDAnimation.init('animationContainer');
     };
