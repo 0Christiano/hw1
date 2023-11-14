@@ -39,8 +39,8 @@
         requestAnimationFrame(this.animate.bind(this));
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.drawSmiley();
         this.moveFace();
+        this.drawSmiley();
       },
 
       drawSmiley: function() {
@@ -60,7 +60,7 @@
         this.context.fill();
 
         this.context.beginPath();
-        this.context.arc(this.faceX, this.faceY, 60, 0, Math.PI); // Smile
+        this.context.arc(this.faceX, this.faceY + 20, 40, 0, Math.PI); // Smile
         this.context.lineWidth = 5;
         this.context.strokeStyle = '#000'; // Black smile color
         this.context.stroke();
