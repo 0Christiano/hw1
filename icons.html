@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smiley Face Animation Library</title>
+  <title>Animated Icons Library</title>
   <style>
     body, html {
       margin: 0;
@@ -17,20 +17,29 @@
   <canvas id="myCanvas"></canvas>
 
   <script>
-    const SmileyFaceAnimation = {
+    const AnimatedIcons = {
       canvas: null,
       context: null,
-      faceX: 50,
-      faceY: 50,
-      speedX: 2,
-      speedY: 2,
-      faceSize: 100,
+      icons: [],
 
       init: function() {
         this.canvas = document.getElementById('myCanvas');
         this.context = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+
+        // Create and initialize three icons
+        for (let i = 0; i < 3; i++) {
+          const icon = {
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            radius: 30 + Math.random() * 20,
+            speedX: 1 + Math.random() * 3,
+            speedY: 1 + Math.random() * 3,
+            color: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},0.8)`
+          };
+          this.icons.push(icon);
+        }
 
         this.animate();
       },
@@ -39,49 +48,35 @@
         requestAnimationFrame(this.animate.bind(this));
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.moveFace();
-        this.drawSmiley();
+        this.icons.forEach(icon => {
+          this.moveIcon(icon);
+          this.drawIcon(icon);
+        });
       },
 
-      drawSmiley: function() {
+      drawIcon: function(icon) {
         this.context.beginPath();
-        this.context.arc(this.faceX, this.faceY, this.faceSize, 0, Math.PI * 2); // Draw face
-        this.context.fillStyle = '#FFD700'; // Yellow face color
+        this.context.arc(icon.x, icon.y, icon.radius, 0, Math.PI * 2);
+        this.context.fillStyle = icon.color;
         this.context.fill();
-
-        this.context.beginPath();
-        this.context.arc(this.faceX - 30, this.faceY - 20, 10, 0, Math.PI * 2); // Left eye
-        this.context.fillStyle = '#000'; // Black eye color
-        this.context.fill();
-
-        this.context.beginPath();
-        this.context.arc(this.faceX + 30, this.faceY - 20, 10, 0, Math.PI * 2); // Right eye
-        this.context.fillStyle = '#000'; // Black eye color
-        this.context.fill();
-
-        this.context.beginPath();
-        this.context.arc(this.faceX, this.faceY + 20, 40, 0, Math.PI); // Smile
-        this.context.lineWidth = 5;
-        this.context.strokeStyle = '#000'; // Black smile color
-        this.context.stroke();
       },
 
-      moveFace: function() {
-        this.faceX += this.speedX;
-        this.faceY += this.speedY;
+      moveIcon: function(icon) {
+        icon.x += icon.speedX;
+        icon.y += icon.speedY;
 
-        if (this.faceX + this.faceSize > this.canvas.width || this.faceX - this.faceSize < 0) {
-          this.speedX = -this.speedX;
+        if (icon.x + icon.radius > this.canvas.width || icon.x - icon.radius < 0) {
+          icon.speedX = -icon.speedX;
         }
-        if (this.faceY + this.faceSize > this.canvas.height || this.faceY - this.faceSize < 0) {
-          this.speedY = -this.speedY;
+        if (icon.y + icon.radius > this.canvas.height || icon.y - icon.radius < 0) {
+          icon.speedY = -icon.speedY;
         }
       }
     };
 
-    // Initialize the SmileyFaceAnimation library on window load
+    // Initialize the AnimatedIcons library on window load
     window.onload = function() {
-      SmileyFaceAnimation.init();
+      AnimatedIcons.init();
     };
   </script>
 </body>
