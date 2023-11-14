@@ -1,12 +1,77 @@
-<button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
-  Christian's very first popover!
-</button>
-<button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Right popover">
-  This is my second popover!
-</button>
-<button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
-  My very own third popover!
-</button>
-<button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover">
-  The final popover!!
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moving Icons Library</title>
+  <style>
+    .icon {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #3498db;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="iconContainer"></div>
+
+  <script>
+    const MovingIcons = {
+      icons: [],
+
+      init: function(containerId) {
+        this.iconContainer = document.getElementById(containerId);
+
+        // Create icons and append to the container
+        for (let i = 1; i <= 5; i++) {
+          const icon = this.createIcon(i);
+          this.icons.push(icon);
+          this.iconContainer.appendChild(icon);
+          this.moveIcon(icon);
+        }
+      },
+
+      createIcon: function(index) {
+        const icon = document.createElement('div');
+        icon.className = 'icon';
+        icon.innerText = index;
+        return icon;
+      },
+
+      moveIcon: function(icon) {
+        const maxWidth = window.innerWidth - icon.offsetWidth;
+        const maxHeight = window.innerHeight - icon.offsetHeight;
+
+        let posX = Math.random() * maxWidth;
+        let posY = Math.random() * maxHeight;
+
+        icon.style.left = posX + 'px';
+        icon.style.top = posY + 'px';
+
+        setInterval(() => {
+          posX += (Math.random() - 0.5) * 10;
+          posY += (Math.random() - 0.5) * 10;
+
+          posX = Math.min(Math.max(posX, 0), maxWidth);
+          posY = Math.min(Math.max(posY, 0), maxHeight);
+
+          icon.style.left = posX + 'px';
+          icon.style.top = posY + 'px';
+        }, 1000);
+      }
+    };
+
+    // Initialize the MovingIcons library on window load
+    window.onload = function() {
+      MovingIcons.init('iconContainer');
+    };
+  </script>
+</body>
+</html>
