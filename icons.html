@@ -1,83 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Animated Icons Library</title>
+  <title>D3.js Bar Chart Example</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    body, html {
-      margin: 0;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
+    /* CSS Styles for the bar chart */
+    .bar {
+      fill: steelblue;
     }
   </style>
 </head>
 <body>
-  <canvas id="myCanvas"></canvas>
+  <svg id="chart"></svg>
 
   <script>
-    const AnimatedIcons = {
-      canvas: null,
-      context: null,
-      icons: [],
+    // Generate initial random data
+    let data = d3.range(5).map(() => Math.random() * 50);
 
-      init: function() {
-        this.canvas = document.getElementById('myCanvas');
-        this.context = this.canvas.getContext('2d');
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+    // Set up SVG canvas size
+    const svgWidth = 500;
+    const svgHeight = 300;
+    const barPadding = 5;
 
+    // Create SVG element
+    const svg = d3.select("#chart")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight);
 
-        for (let i = 0; i < 3; i++) {
-          const icon = {
-            x: Math.random() * this.canvas.width,
-            y: Math.random() * this.canvas.height,
-            radius: 30 + Math.random() * 20,
-            speedX: 1 + Math.random() * 3,
-            speedY: 1 + Math.random() * 3,
-            color: `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},0.8)`
-          };
-          this.icons.push(icon);
-        }
+    // Function to update the chart with new data
+    function updateChart() {
+      // Randomly update the data values
+      data = data.map(() => Math.random() * 50);
 
-        this.animate();
-      },
+      // Update the bars with new data
+      const bars = svg.selectAll("rect")
+        .data(data);
 
-      animate: function() {
-        requestAnimationFrame(this.animate.bind(this));
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      // Remove exiting bars
+      bars.exit().remove();
 
-        this.icons.forEach(icon => {
-          this.moveIcon(icon);
-          this.drawIcon(icon);
-        });
-      },
+      // Create new bars
+      bars.enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", (d, i) => i * (svgWidth / data.length))
+        .attr("y", svgHeight)
+        .attr("width", svgWidth / data.length - barPadding)
+        .merge(bars)
+        .transition()
+        .duration(1000)
+        .attr("height", d => d * 5)
+        .attr("y", d => svgHeight - d * 5);
+    }
 
-      drawIcon: function(icon) {
-        this.context.beginPath();
-        this.context.arc(icon.x, icon.y, icon.radius, 0, Math.PI * 2);
-        this.context.fillStyle = icon.color;
-        this.context.fill();
-      },
+    // Update the chart every 2 seconds
+    setInterval(updateChart, 2000);
 
-      moveIcon: function(icon) {
-        icon.x += icon.speedX;
-        icon.y += icon.speedY;
-
-        if (icon.x + icon.radius > this.canvas.width || icon.x - icon.radius < 0) {
-          icon.speedX = -icon.speedX;
-        }
-        if (icon.y + icon.radius > this.canvas.height || icon.y - icon.radius < 0) {
-          icon.speedY = -icon.speedY;
-        }
-      }
-    };
-
-
-    window.onload = function() {
-      AnimatedIcons.init();
-    };
+    // Initial chart rendering
+    updateChart();
   </script>
 </body>
 </html>
