@@ -1,12 +1,49 @@
-<!-- Include axios library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
-<script>
-  // Example usage
-  axios.get('https://jsonplaceholder.typicode.com/posts/1')
-    .then(response => {
-      console.log(response.data); // Output: Data of the first post
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tooltip Library</title>
+  <style>
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+      cursor: help;
+    }
+    
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tooltip Example</h2>
+  
+  <p>Move the mouse pointer over the text below to see the tooltip:</p>
+  
+  <div class="tooltip" id="exampleTooltip" data-tooltip="This is a tooltip message">
+    Hover over me
+    <span class="tooltiptext" id="tooltipText">This is a tooltip message</span>
+  </div>
+
+  <script src="tooltip.js"></script>
+</body>
+</html>
