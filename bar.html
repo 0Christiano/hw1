@@ -4,7 +4,7 @@
   <title>D3.js Bar Chart Example</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
-    /* CSS Styles for the bar chart */
+   
     .bar {
       fill: steelblue;
     }
@@ -14,32 +14,32 @@
   <svg id="chart"></svg>
 
   <script>
-    // Generate initial random data
+ 
     let data = d3.range(5).map(() => Math.random() * 50);
 
-    // Set up SVG canvas size
+ 
     const svgWidth = 500;
     const svgHeight = 300;
     const barPadding = 5;
 
-    // Create SVG element
+
     const svg = d3.select("#chart")
       .attr("width", svgWidth)
       .attr("height", svgHeight);
 
-    // Function to update the chart with new data
+    
     function updateChart() {
-      // Randomly update the data values
+     
       data = data.map(() => Math.random() * 50);
 
-      // Update the bars with new data
+     
       const bars = svg.selectAll("rect")
         .data(data);
 
-      // Remove exiting bars
+     
       bars.exit().remove();
 
-      // Create new bars
+  
       bars.enter()
         .append("rect")
         .attr("class", "bar")
@@ -53,10 +53,10 @@
         .attr("y", d => svgHeight - d * 5);
     }
 
-    // Update the chart every 2 seconds
+   
     setInterval(updateChart, 2000);
 
-    // Initial chart rendering
+   
     updateChart();
   </script>
 </body>
