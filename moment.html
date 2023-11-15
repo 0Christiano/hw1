@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Moment.js Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+  <script>
+   
+    const MyMomentLibrary = {
+      formatDate: function(date, format) {
+        return moment(date).format(format);
+      }
+    };
+
+    const today = new Date();
+    const formattedDate = MyMomentLibrary.formatDate(today, 'MMMM Do YYYY, h:mm:ss a');
+    console.log('Formatted Date:', formattedDate);
+  </script>
+</body>
+</html>
