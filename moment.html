@@ -2,32 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Form Validation Example</title>
-  <script src="validation.js" type="text/javascript"></script>
+  <title>DOM Manipulation Example</title>
+  <script src="domManipulation.js" type="text/javascript"></script>
 </head>
 <body>
-  <form id="myForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
-    <button id="validateBtn">Validate</button>
-  </form>
-
-  <div id="result"></div>
+  <div id="myElement">Element to manipulate</div>
+  <button id="highlightBtn">Highlight Element</button>
 
   <script>
-    document.getElementById('validateBtn').addEventListener('click', function(event) {
-      event.preventDefault();
-      const emailValue = document.getElementById('email').value;
-      const isValidEmail = ValidationLibrary.isEmail(emailValue);
-      const resultDiv = document.getElementById('result');
-      
-      if (isValidEmail) {
-        resultDiv.textContent = 'Valid email!';
-        resultDiv.style.color = 'green';
-      } else {
-        resultDiv.textContent = 'Invalid email!';
-        resultDiv.style.color = 'red';
-      }
+    document.getElementById('highlightBtn').addEventListener('click', function() {
+      const element = DOMLibrary.getElement('#myElement');
+      DOMLibrary.addClass(element, 'highlight');
     });
   </script>
 </body>
