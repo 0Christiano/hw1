@@ -1,7 +1,12 @@
-<!-- Include Moment.js library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- Include axios library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
   // Example usage
-  const today = moment(); // Current date and time
-  console.log(today.format('MMMM Do YYYY, h:mm:ss a')); // Output: November 15th 2023, 5:30:00 pm
+  axios.get('https://jsonplaceholder.typicode.com/posts/1')
+    .then(response => {
+      console.log(response.data); // Output: Data of the first post
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 </script>
