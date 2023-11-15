@@ -28,7 +28,7 @@
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
 
-        // Create and initialize three icons
+
         for (let i = 0; i < 3; i++) {
           const icon = {
             x: Math.random() * this.canvas.width,
@@ -74,7 +74,7 @@
       }
     };
 
-    // Initialize the AnimatedIcons library on window load
+
     window.onload = function() {
       AnimatedIcons.init();
     };
